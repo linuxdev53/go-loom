@@ -6,10 +6,10 @@ import "github.com/loomnetwork/go-loom/types/types.proto";
 message ChainConfigInitRequest {
 }
 
-message GetConfig {
+message GetConfigRequest {
     string key = 1;
 }
-message GetFeature {
+message GetFeatureRequest {
     string key = 1;
 }
 
@@ -26,7 +26,7 @@ message Feature {
 message ListConfig {
 }
 
-message ListFeatures {
+message ListFeaturesRequest {
 }
 
 
@@ -42,7 +42,7 @@ message ListConfigResponse {
 //TODO:update config, not supported yet
 
 
-message UpdateFeature {
+message UpdateFeatureRequest {
     string key = 1;
     bool enabled = 2;
 }
