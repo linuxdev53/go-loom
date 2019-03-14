@@ -6,7 +6,7 @@ package chainconfig
 import proto "github.com/gogo/protobuf/proto"
 import fmt "fmt"
 import math "math"
-import _ "github.com/loomnetwork/go-loom/types"
+import types "github.com/loomnetwork/go-loom/types"
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal
@@ -20,16 +20,18 @@ var _ = math.Inf
 const _ = proto.GoGoProtoPackageIsVersion2 // please upgrade the proto package
 
 type ChainConfigInitRequest struct {
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+	// Only the owner will be allowed to add known features
+	Owner                *types.Address `protobuf:"bytes,1,opt,name=owner" json:"owner,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}       `json:"-"`
+	XXX_unrecognized     []byte         `json:"-"`
+	XXX_sizecache        int32          `json:"-"`
 }
 
 func (m *ChainConfigInitRequest) Reset()         { *m = ChainConfigInitRequest{} }
 func (m *ChainConfigInitRequest) String() string { return proto.CompactTextString(m) }
 func (*ChainConfigInitRequest) ProtoMessage()    {}
 func (*ChainConfigInitRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_chainconfig_93103e98b1c906f0, []int{0}
+	return fileDescriptor_chainconfig_d022b3e64216c5ae, []int{0}
 }
 func (m *ChainConfigInitRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ChainConfigInitRequest.Unmarshal(m, b)
@@ -49,6 +51,13 @@ func (m *ChainConfigInitRequest) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_ChainConfigInitRequest proto.InternalMessageInfo
 
+func (m *ChainConfigInitRequest) GetOwner() *types.Address {
+	if m != nil {
+		return m.Owner
+	}
+	return nil
+}
+
 type GetConfigRequest struct {
 	Key                  string   `protobuf:"bytes,1,opt,name=key,proto3" json:"key,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
@@ -60,7 +69,7 @@ func (m *GetConfigRequest) Reset()         { *m = GetConfigRequest{} }
 func (m *GetConfigRequest) String() string { return proto.CompactTextString(m) }
 func (*GetConfigRequest) ProtoMessage()    {}
 func (*GetConfigRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_chainconfig_93103e98b1c906f0, []int{1}
+	return fileDescriptor_chainconfig_d022b3e64216c5ae, []int{1}
 }
 func (m *GetConfigRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_GetConfigRequest.Unmarshal(m, b)
@@ -98,7 +107,7 @@ func (m *GetFeatureRequest) Reset()         { *m = GetFeatureRequest{} }
 func (m *GetFeatureRequest) String() string { return proto.CompactTextString(m) }
 func (*GetFeatureRequest) ProtoMessage()    {}
 func (*GetFeatureRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_chainconfig_93103e98b1c906f0, []int{2}
+	return fileDescriptor_chainconfig_d022b3e64216c5ae, []int{2}
 }
 func (m *GetFeatureRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_GetFeatureRequest.Unmarshal(m, b)
@@ -125,6 +134,60 @@ func (m *GetFeatureRequest) GetKey() string {
 	return ""
 }
 
+type GetFeatureResponse struct {
+	Key                  string   `protobuf:"bytes,1,opt,name=key,proto3" json:"key,omitempty"`
+	Feature              *Feature `protobuf:"bytes,2,opt,name=feature" json:"feature,omitempty"`
+	Percentage           uint64   `protobuf:"varint,3,opt,name=percentage,proto3" json:"percentage,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *GetFeatureResponse) Reset()         { *m = GetFeatureResponse{} }
+func (m *GetFeatureResponse) String() string { return proto.CompactTextString(m) }
+func (*GetFeatureResponse) ProtoMessage()    {}
+func (*GetFeatureResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_chainconfig_d022b3e64216c5ae, []int{3}
+}
+func (m *GetFeatureResponse) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_GetFeatureResponse.Unmarshal(m, b)
+}
+func (m *GetFeatureResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_GetFeatureResponse.Marshal(b, m, deterministic)
+}
+func (dst *GetFeatureResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GetFeatureResponse.Merge(dst, src)
+}
+func (m *GetFeatureResponse) XXX_Size() int {
+	return xxx_messageInfo_GetFeatureResponse.Size(m)
+}
+func (m *GetFeatureResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_GetFeatureResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_GetFeatureResponse proto.InternalMessageInfo
+
+func (m *GetFeatureResponse) GetKey() string {
+	if m != nil {
+		return m.Key
+	}
+	return ""
+}
+
+func (m *GetFeatureResponse) GetFeature() *Feature {
+	if m != nil {
+		return m.Feature
+	}
+	return nil
+}
+
+func (m *GetFeatureResponse) GetPercentage() uint64 {
+	if m != nil {
+		return m.Percentage
+	}
+	return 0
+}
+
 type Config struct {
 	Name                 string   `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
 	Value                string   `protobuf:"bytes,2,opt,name=value,proto3" json:"value,omitempty"`
@@ -137,7 +200,7 @@ func (m *Config) Reset()         { *m = Config{} }
 func (m *Config) String() string { return proto.CompactTextString(m) }
 func (*Config) ProtoMessage()    {}
 func (*Config) Descriptor() ([]byte, []int) {
-	return fileDescriptor_chainconfig_93103e98b1c906f0, []int{3}
+	return fileDescriptor_chainconfig_d022b3e64216c5ae, []int{4}
 }
 func (m *Config) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_Config.Unmarshal(m, b)
@@ -172,18 +235,20 @@ func (m *Config) GetValue() string {
 }
 
 type Feature struct {
-	Name                 string   `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
-	Enabled              string   `protobuf:"bytes,2,opt,name=enabled,proto3" json:"enabled,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+	Name                 string           `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	Enabled              string           `protobuf:"bytes,2,opt,name=enabled,proto3" json:"enabled,omitempty"`
+	Status               string           `protobuf:"bytes,3,opt,name=status,proto3" json:"status,omitempty"`
+	Validators           []*types.Address `protobuf:"bytes,4,rep,name=validators" json:"validators,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}         `json:"-"`
+	XXX_unrecognized     []byte           `json:"-"`
+	XXX_sizecache        int32            `json:"-"`
 }
 
 func (m *Feature) Reset()         { *m = Feature{} }
 func (m *Feature) String() string { return proto.CompactTextString(m) }
 func (*Feature) ProtoMessage()    {}
 func (*Feature) Descriptor() ([]byte, []int) {
-	return fileDescriptor_chainconfig_93103e98b1c906f0, []int{4}
+	return fileDescriptor_chainconfig_d022b3e64216c5ae, []int{5}
 }
 func (m *Feature) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_Feature.Unmarshal(m, b)
@@ -217,6 +282,20 @@ func (m *Feature) GetEnabled() string {
 	return ""
 }
 
+func (m *Feature) GetStatus() string {
+	if m != nil {
+		return m.Status
+	}
+	return ""
+}
+
+func (m *Feature) GetValidators() []*types.Address {
+	if m != nil {
+		return m.Validators
+	}
+	return nil
+}
+
 type ListConfig struct {
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
@@ -227,7 +306,7 @@ func (m *ListConfig) Reset()         { *m = ListConfig{} }
 func (m *ListConfig) String() string { return proto.CompactTextString(m) }
 func (*ListConfig) ProtoMessage()    {}
 func (*ListConfig) Descriptor() ([]byte, []int) {
-	return fileDescriptor_chainconfig_93103e98b1c906f0, []int{5}
+	return fileDescriptor_chainconfig_d022b3e64216c5ae, []int{6}
 }
 func (m *ListConfig) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ListConfig.Unmarshal(m, b)
@@ -257,7 +336,7 @@ func (m *ListFeaturesRequest) Reset()         { *m = ListFeaturesRequest{} }
 func (m *ListFeaturesRequest) String() string { return proto.CompactTextString(m) }
 func (*ListFeaturesRequest) ProtoMessage()    {}
 func (*ListFeaturesRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_chainconfig_93103e98b1c906f0, []int{6}
+	return fileDescriptor_chainconfig_d022b3e64216c5ae, []int{7}
 }
 func (m *ListFeaturesRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ListFeaturesRequest.Unmarshal(m, b)
@@ -278,17 +357,17 @@ func (m *ListFeaturesRequest) XXX_DiscardUnknown() {
 var xxx_messageInfo_ListFeaturesRequest proto.InternalMessageInfo
 
 type ListFeaturesResponse struct {
-	Features             []*Feature `protobuf:"bytes,1,rep,name=features" json:"features,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}   `json:"-"`
-	XXX_unrecognized     []byte     `json:"-"`
-	XXX_sizecache        int32      `json:"-"`
+	Features             []*GetFeatureResponse `protobuf:"bytes,1,rep,name=features" json:"features,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}              `json:"-"`
+	XXX_unrecognized     []byte                `json:"-"`
+	XXX_sizecache        int32                 `json:"-"`
 }
 
 func (m *ListFeaturesResponse) Reset()         { *m = ListFeaturesResponse{} }
 func (m *ListFeaturesResponse) String() string { return proto.CompactTextString(m) }
 func (*ListFeaturesResponse) ProtoMessage()    {}
 func (*ListFeaturesResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_chainconfig_93103e98b1c906f0, []int{7}
+	return fileDescriptor_chainconfig_d022b3e64216c5ae, []int{8}
 }
 func (m *ListFeaturesResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ListFeaturesResponse.Unmarshal(m, b)
@@ -308,7 +387,7 @@ func (m *ListFeaturesResponse) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_ListFeaturesResponse proto.InternalMessageInfo
 
-func (m *ListFeaturesResponse) GetFeatures() []*Feature {
+func (m *ListFeaturesResponse) GetFeatures() []*GetFeatureResponse {
 	if m != nil {
 		return m.Features
 	}
@@ -326,7 +405,7 @@ func (m *ListConfigResponse) Reset()         { *m = ListConfigResponse{} }
 func (m *ListConfigResponse) String() string { return proto.CompactTextString(m) }
 func (*ListConfigResponse) ProtoMessage()    {}
 func (*ListConfigResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_chainconfig_93103e98b1c906f0, []int{8}
+	return fileDescriptor_chainconfig_d022b3e64216c5ae, []int{9}
 }
 func (m *ListConfigResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ListConfigResponse.Unmarshal(m, b)
@@ -353,6 +432,82 @@ func (m *ListConfigResponse) GetConfig() []*Config {
 	return nil
 }
 
+type EnableFeatureRequest struct {
+	Name                 string   `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *EnableFeatureRequest) Reset()         { *m = EnableFeatureRequest{} }
+func (m *EnableFeatureRequest) String() string { return proto.CompactTextString(m) }
+func (*EnableFeatureRequest) ProtoMessage()    {}
+func (*EnableFeatureRequest) Descriptor() ([]byte, []int) {
+	return fileDescriptor_chainconfig_d022b3e64216c5ae, []int{10}
+}
+func (m *EnableFeatureRequest) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_EnableFeatureRequest.Unmarshal(m, b)
+}
+func (m *EnableFeatureRequest) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_EnableFeatureRequest.Marshal(b, m, deterministic)
+}
+func (dst *EnableFeatureRequest) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_EnableFeatureRequest.Merge(dst, src)
+}
+func (m *EnableFeatureRequest) XXX_Size() int {
+	return xxx_messageInfo_EnableFeatureRequest.Size(m)
+}
+func (m *EnableFeatureRequest) XXX_DiscardUnknown() {
+	xxx_messageInfo_EnableFeatureRequest.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_EnableFeatureRequest proto.InternalMessageInfo
+
+func (m *EnableFeatureRequest) GetName() string {
+	if m != nil {
+		return m.Name
+	}
+	return ""
+}
+
+type EnableFeatureResponse struct {
+	Feature              *GetFeatureResponse `protobuf:"bytes,1,opt,name=feature" json:"feature,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}            `json:"-"`
+	XXX_unrecognized     []byte              `json:"-"`
+	XXX_sizecache        int32               `json:"-"`
+}
+
+func (m *EnableFeatureResponse) Reset()         { *m = EnableFeatureResponse{} }
+func (m *EnableFeatureResponse) String() string { return proto.CompactTextString(m) }
+func (*EnableFeatureResponse) ProtoMessage()    {}
+func (*EnableFeatureResponse) Descriptor() ([]byte, []int) {
+	return fileDescriptor_chainconfig_d022b3e64216c5ae, []int{11}
+}
+func (m *EnableFeatureResponse) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_EnableFeatureResponse.Unmarshal(m, b)
+}
+func (m *EnableFeatureResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_EnableFeatureResponse.Marshal(b, m, deterministic)
+}
+func (dst *EnableFeatureResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_EnableFeatureResponse.Merge(dst, src)
+}
+func (m *EnableFeatureResponse) XXX_Size() int {
+	return xxx_messageInfo_EnableFeatureResponse.Size(m)
+}
+func (m *EnableFeatureResponse) XXX_DiscardUnknown() {
+	xxx_messageInfo_EnableFeatureResponse.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_EnableFeatureResponse proto.InternalMessageInfo
+
+func (m *EnableFeatureResponse) GetFeature() *GetFeatureResponse {
+	if m != nil {
+		return m.Feature
+	}
+	return nil
+}
+
 type UpdateFeatureRequest struct {
 	Key                  string   `protobuf:"bytes,1,opt,name=key,proto3" json:"key,omitempty"`
 	Enabled              bool     `protobuf:"varint,2,opt,name=enabled,proto3" json:"enabled,omitempty"`
@@ -365,7 +520,7 @@ func (m *UpdateFeatureRequest) Reset()         { *m = UpdateFeatureRequest{} }
 func (m *UpdateFeatureRequest) String() string { return proto.CompactTextString(m) }
 func (*UpdateFeatureRequest) ProtoMessage()    {}
 func (*UpdateFeatureRequest) Descriptor() ([]byte, []int) {
-	return fileDescriptor_chainconfig_93103e98b1c906f0, []int{9}
+	return fileDescriptor_chainconfig_d022b3e64216c5ae, []int{12}
 }
 func (m *UpdateFeatureRequest) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_UpdateFeatureRequest.Unmarshal(m, b)
@@ -403,38 +558,49 @@ func init() {
 	proto.RegisterType((*ChainConfigInitRequest)(nil), "ChainConfigInitRequest")
 	proto.RegisterType((*GetConfigRequest)(nil), "GetConfigRequest")
 	proto.RegisterType((*GetFeatureRequest)(nil), "GetFeatureRequest")
+	proto.RegisterType((*GetFeatureResponse)(nil), "GetFeatureResponse")
 	proto.RegisterType((*Config)(nil), "Config")
 	proto.RegisterType((*Feature)(nil), "Feature")
 	proto.RegisterType((*ListConfig)(nil), "ListConfig")
 	proto.RegisterType((*ListFeaturesRequest)(nil), "ListFeaturesRequest")
 	proto.RegisterType((*ListFeaturesResponse)(nil), "ListFeaturesResponse")
 	proto.RegisterType((*ListConfigResponse)(nil), "ListConfigResponse")
+	proto.RegisterType((*EnableFeatureRequest)(nil), "EnableFeatureRequest")
+	proto.RegisterType((*EnableFeatureResponse)(nil), "EnableFeatureResponse")
 	proto.RegisterType((*UpdateFeatureRequest)(nil), "UpdateFeatureRequest")
 }
 
 func init() {
-	proto.RegisterFile("github.com/loomnetwork/go-loom/builtin/types/chainconfig/chainconfig.proto", fileDescriptor_chainconfig_93103e98b1c906f0)
+	proto.RegisterFile("github.com/loomnetwork/go-loom/builtin/types/chainconfig/chainconfig.proto", fileDescriptor_chainconfig_d022b3e64216c5ae)
 }
 
-var fileDescriptor_chainconfig_93103e98b1c906f0 = []byte{
-	// 300 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x84, 0x51, 0xcd, 0x4e, 0xf3, 0x30,
-	0x10, 0x54, 0xbe, 0x7e, 0x24, 0x61, 0xe1, 0x50, 0x4c, 0x40, 0x11, 0x17, 0x2a, 0xab, 0x48, 0xbd,
-	0x90, 0xa0, 0x22, 0xc4, 0x85, 0x13, 0x95, 0xa8, 0x40, 0x9c, 0x2a, 0xf1, 0x00, 0x4e, 0xba, 0x4d,
-	0xad, 0x26, 0x76, 0x88, 0x1d, 0x50, 0xdf, 0x1e, 0x25, 0x76, 0xc2, 0x8f, 0x40, 0xbd, 0x58, 0x3b,
-	0xb3, 0x3b, 0x63, 0x8f, 0x17, 0x9e, 0x32, 0xae, 0xd7, 0x75, 0x12, 0xa5, 0xb2, 0x88, 0x73, 0x29,
-	0x0b, 0x81, 0xfa, 0x5d, 0x56, 0x9b, 0x38, 0x93, 0x97, 0x0d, 0x8c, 0x93, 0x9a, 0xe7, 0x9a, 0x8b,
-	0x58, 0x6f, 0x4b, 0x54, 0x71, 0xba, 0x66, 0x5c, 0xa4, 0x52, 0xac, 0x78, 0xf6, 0xb5, 0x8e, 0xca,
-	0x4a, 0x6a, 0x79, 0x76, 0xb5, 0xc3, 0xcb, 0x78, 0xb4, 0xa7, 0x51, 0xd0, 0x10, 0x4e, 0x67, 0x8d,
-	0xcd, 0xac, 0xb5, 0x79, 0x14, 0x5c, 0x2f, 0xf0, 0xb5, 0x46, 0xa5, 0xe9, 0x18, 0x86, 0x73, 0xd4,
-	0x86, 0xb7, 0x1c, 0x19, 0xc2, 0x60, 0x83, 0xdb, 0xd0, 0x19, 0x39, 0x93, 0xfd, 0x45, 0x53, 0xd2,
-	0x0b, 0x38, 0x9a, 0xa3, 0x7e, 0x40, 0xa6, 0xeb, 0x0a, 0xff, 0x1e, 0x9b, 0x82, 0x6b, 0x9c, 0x08,
-	0x81, 0xff, 0x82, 0x15, 0x68, 0x9b, 0x6d, 0x4d, 0x02, 0xd8, 0x7b, 0x63, 0x79, 0x8d, 0xe1, 0xbf,
-	0x96, 0x34, 0x80, 0xde, 0x82, 0x67, 0x7d, 0x7f, 0x15, 0x85, 0xe0, 0xa1, 0x60, 0x49, 0x8e, 0x4b,
-	0x2b, 0xeb, 0x20, 0x3d, 0x04, 0x78, 0xe6, 0xca, 0x3e, 0x9d, 0x9e, 0xc0, 0x71, 0x83, 0xac, 0x95,
-	0xea, 0xe2, 0xdd, 0x41, 0xf0, 0x9d, 0x56, 0xa5, 0x14, 0x0a, 0xc9, 0x18, 0xfc, 0x95, 0xe5, 0x42,
-	0x67, 0x34, 0x98, 0x1c, 0x4c, 0xfd, 0xa8, 0x8b, 0xd7, 0x77, 0xe8, 0x0d, 0x90, 0xcf, 0x2b, 0x7a,
-	0xed, 0x39, 0xb8, 0x66, 0x1d, 0x56, 0xe9, 0x45, 0x76, 0xc0, 0xd2, 0xf4, 0x1e, 0x82, 0x97, 0x72,
-	0xc9, 0x34, 0xee, 0xfa, 0xb0, 0x9f, 0xe9, 0xfc, 0x3e, 0x5d, 0xe2, 0xb6, 0x8b, 0xbb, 0xfe, 0x08,
-	0x00, 0x00, 0xff, 0xff, 0x68, 0x46, 0xcb, 0x5b, 0x38, 0x02, 0x00, 0x00,
+var fileDescriptor_chainconfig_d022b3e64216c5ae = []byte{
+	// 419 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x84, 0x53, 0xdf, 0x6f, 0xd3, 0x30,
+	0x10, 0x56, 0x68, 0x97, 0xb4, 0x07, 0x0f, 0xc3, 0xcb, 0xa6, 0x88, 0x87, 0x51, 0x59, 0x20, 0x55,
+	0x48, 0x4b, 0xd0, 0x10, 0x12, 0xaf, 0x30, 0xb1, 0x0a, 0xc4, 0x53, 0x24, 0xfe, 0x00, 0x27, 0xb9,
+	0x65, 0x66, 0xa9, 0x1d, 0x62, 0x67, 0x55, 0xff, 0x7b, 0x14, 0xdb, 0x69, 0xd3, 0x1f, 0xa8, 0x2f,
+	0xd5, 0xdd, 0xf9, 0xfb, 0xbe, 0xbb, 0x7e, 0x77, 0x81, 0x9f, 0x25, 0xd7, 0x8f, 0x6d, 0x16, 0xe7,
+	0x72, 0x99, 0x54, 0x52, 0x2e, 0x05, 0xea, 0x95, 0x6c, 0x9e, 0x92, 0x52, 0xde, 0x74, 0x69, 0x92,
+	0xb5, 0xbc, 0xd2, 0x5c, 0x24, 0x7a, 0x5d, 0xa3, 0x4a, 0xf2, 0x47, 0xc6, 0x45, 0x2e, 0xc5, 0x03,
+	0x2f, 0x87, 0x71, 0x5c, 0x37, 0x52, 0xcb, 0x37, 0x1f, 0x4f, 0x68, 0x59, 0x0d, 0xf3, 0x6b, 0x19,
+	0xf4, 0x0b, 0x5c, 0xdd, 0x75, 0x32, 0x77, 0x46, 0xe6, 0x87, 0xe0, 0x3a, 0xc5, 0xbf, 0x2d, 0x2a,
+	0x4d, 0xae, 0xe1, 0x4c, 0xae, 0x04, 0x36, 0x91, 0x37, 0xf3, 0xe6, 0x2f, 0x6f, 0x27, 0xf1, 0xd7,
+	0xa2, 0x68, 0x50, 0xa9, 0xd4, 0x96, 0xe9, 0x3b, 0x38, 0x5f, 0xa0, 0xb6, 0xbc, 0x9e, 0x73, 0x0e,
+	0xa3, 0x27, 0x5c, 0x1b, 0xc6, 0x34, 0xed, 0x42, 0xfa, 0x1e, 0x5e, 0x2f, 0x50, 0xdf, 0x23, 0xd3,
+	0x6d, 0x83, 0xff, 0x87, 0xfd, 0x01, 0x32, 0x84, 0xa9, 0x5a, 0x0a, 0x85, 0x87, 0x38, 0x42, 0x21,
+	0x78, 0xb0, 0xa0, 0xe8, 0x85, 0x1b, 0xab, 0x27, 0xf5, 0x0f, 0xe4, 0x1a, 0xa0, 0xc6, 0x26, 0x47,
+	0xa1, 0x59, 0x89, 0xd1, 0x68, 0xe6, 0xcd, 0xc7, 0xe9, 0xa0, 0x42, 0x6f, 0xc1, 0xb7, 0x53, 0x13,
+	0x02, 0x63, 0xc1, 0x96, 0xe8, 0x1a, 0x98, 0x98, 0x84, 0x70, 0xf6, 0xcc, 0xaa, 0xd6, 0xea, 0x4f,
+	0x53, 0x9b, 0xd0, 0x35, 0x04, 0xae, 0xcf, 0x51, 0x52, 0x04, 0x01, 0x0a, 0x96, 0x55, 0x58, 0x38,
+	0x5a, 0x9f, 0x92, 0x2b, 0xf0, 0x95, 0x66, 0xba, 0x55, 0x66, 0x90, 0x69, 0xea, 0x32, 0x32, 0x07,
+	0x78, 0x66, 0x15, 0x2f, 0x98, 0x96, 0x8d, 0x8a, 0xc6, 0xb3, 0xd1, 0x8e, 0xc5, 0x83, 0x37, 0xfa,
+	0x0a, 0xe0, 0x17, 0x57, 0xce, 0x68, 0x7a, 0x09, 0x17, 0x5d, 0xe6, 0x86, 0x51, 0xce, 0x51, 0xba,
+	0x80, 0x70, 0xb7, 0xec, 0x1c, 0x4c, 0x60, 0xe2, 0x6c, 0x51, 0x91, 0x67, 0x9a, 0x5c, 0xc4, 0x87,
+	0x46, 0xa7, 0x1b, 0x10, 0xfd, 0x0c, 0x64, 0xdb, 0x6d, 0x23, 0xf3, 0x16, 0x7c, 0x7b, 0x67, 0x4e,
+	0x24, 0x88, 0x1d, 0xc0, 0x95, 0xe9, 0x07, 0x08, 0xbf, 0x9b, 0x7f, 0xbc, 0xb7, 0xe9, 0x23, 0x66,
+	0xd1, 0x7b, 0xb8, 0xdc, 0xc3, 0xba, 0x2e, 0x37, 0xdb, 0xe5, 0xda, 0x9b, 0x3b, 0x3a, 0x6b, 0x8f,
+	0xa1, 0xdf, 0x20, 0xfc, 0x5d, 0x17, 0x4c, 0xe3, 0xa9, 0xeb, 0xda, 0x5f, 0xcf, 0x64, 0xb3, 0x9e,
+	0xcc, 0x37, 0x5f, 0xc1, 0xa7, 0x7f, 0x01, 0x00, 0x00, 0xff, 0xff, 0x2a, 0x54, 0xd5, 0x4e, 0x85,
+	0x03, 0x00, 0x00,
 }
