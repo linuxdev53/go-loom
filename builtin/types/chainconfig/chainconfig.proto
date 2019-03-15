@@ -9,14 +9,20 @@ message ChainConfigInitRequest {
 }
 
 message GetConfigRequest {
-    string key = 1;
+    string name = 1;
 }
 message GetFeatureRequest {
-    string key = 1;
+    string name = 1;
+}
+
+message SetFeatureRequest {
+    string name = 1;
+}
+message SetFeatureResponse {
+    GetFeatureResponse feature = 1;
 }
 
 message GetFeatureResponse {
-    string key = 1;
     Feature feature = 2;
     uint64 percentage = 3;
 }
