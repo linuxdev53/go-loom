@@ -1,9 +1,8 @@
 syntax = "proto3";
-
+package chainconfig;
 import "github.com/loomnetwork/go-loom/types/types.proto";
 
-
-message ChainConfigInitRequest {
+message InitRequest {
     // Only the owner will be allowed to add known features
     Address owner = 1;
 }
@@ -15,16 +14,20 @@ message GetFeatureRequest {
     string name = 1;
 }
 
-message SetFeatureRequest {
+message AddFeatureRequest {
     string name = 1;
 }
-message SetFeatureResponse {
-    GetFeatureResponse feature = 1;
+
+message AddFeatureResponse {
 }
 
 message GetFeatureResponse {
-    Feature feature = 2;
-    uint64 percentage = 3;
+    FeatureInfo featureInfo = 1;
+}
+
+message FeatureInfo {
+    Feature feature = 1;
+    uint64 percentage = 2;
 }
 
 message Config {
@@ -34,9 +37,13 @@ message Config {
 
 message Feature {
     string name = 1;
-    string enabled = 2;
-    string status = 3;
-    repeated Address validators = 4;
+    enum FeatureStatus {
+        PENDING = 0;
+        ENABLED = 1;
+        DISABLED = 2;
+    }
+    FeatureStatus status = 2;
+    repeated Address validators = 3;
 }
 
 message ListConfig {
@@ -46,7 +53,7 @@ message ListFeaturesRequest {
 }
 
 message ListFeaturesResponse {
-    repeated GetFeatureResponse features = 1;
+    repeated FeatureInfo featureInfos = 1;
 }
 
 message ListConfigResponse {
@@ -58,7 +65,7 @@ message EnableFeatureRequest {
 }
 
 message EnableFeatureResponse {
-    GetFeatureResponse feature = 1;
+
 }
 
 //TODO:update config, not supported yet
